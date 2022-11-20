@@ -1,9 +1,11 @@
 package com.template.auth.services;
 
+import com.template.auth.exceptions.RequestException;
 import com.template.auth.interfaces.UserInterface;
 import com.template.auth.model.User;
 import com.template.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,6 +21,10 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
     public User save(User user){
+        Optional<User> prevUser = userRepository.findByUsername(user.getUsername());
+        if (prevUser.isPresent()){
+            throw new RequestException(HttpStatus.CONFLICT,"P-409","User already exits");
+        }
         return userRepository.save(user);
     }
 

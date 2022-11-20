@@ -7,8 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.logging.LoggerGroup;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestControllerAdvice
@@ -24,5 +28,15 @@ public class AdviceController {
     public ResponseEntity<ErroDto>  requestExceptionHandler(RequestException ex){
         ErroDto error = ErroDto.builder().code(ex.getCode()).message(ex.getMessage()).build();
         return  new ResponseEntity<>(error, ex.getHttpStatus());
+    }
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ResponseEntity<?> methodArgumentNotValid(MethodArgumentNotValidException ex){
+        List<ErroDto> errors = new ArrayList<>();
+        if (ex.getBindingResult().hasErrors()) {
+            ex.getBindingResult().getFieldErrors().forEach(error -> {
+                errors.add(ErroDto.builder().message(error.getField() + " " + error.getDefaultMessage()).code("P-400").build());
+            });
+        }
+        return ResponseEntity.unprocessableEntity().body(errors);
     }
 }
