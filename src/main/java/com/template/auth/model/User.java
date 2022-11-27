@@ -25,7 +25,7 @@ public class User {
     private String email;
     @NotNull
     private String password;
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.MERGE,CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "auth_group_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns =  @JoinColumn(name = "group_id"))
     private Set<Group> groups = new HashSet<>();
 

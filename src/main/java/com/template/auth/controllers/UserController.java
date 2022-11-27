@@ -1,17 +1,13 @@
 package com.template.auth.controllers;
 
 
-import com.sun.istack.NotNull;
-import com.template.auth.dto.Message;
 import com.template.auth.dto.UserRequestDto;
 import com.template.auth.exceptions.RequestException;
-import com.template.auth.interfaces.UserInterface;
 import com.template.auth.model.User;
 import com.template.auth.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -34,9 +30,6 @@ public class UserController {
     @PostMapping("/create")
     public ResponseEntity<User> create(@Valid @RequestBody UserRequestDto user) {
         User newUser = userService.save(user.toUser());
-        if (newUser == null){
-            throw new RequestException(HttpStatus.BAD_REQUEST,"P-500","cannot create user");
-        }
         return new ResponseEntity<User>(user.toUser(), HttpStatus.OK);
 
     }

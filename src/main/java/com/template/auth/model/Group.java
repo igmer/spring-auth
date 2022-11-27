@@ -27,6 +27,10 @@ public class Group {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "groups")
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
+
+    public void  addUser(User user){
+        this.getUsers().add(user);
+    }
 
 }

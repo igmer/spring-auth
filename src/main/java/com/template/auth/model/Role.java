@@ -1,5 +1,6 @@
 package com.template.auth.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class Role {
     @NotNull
     private String name;
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnore
     private Set<Group> groups = new HashSet<>();
 
     public void addGroup(Group group){
