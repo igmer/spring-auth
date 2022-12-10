@@ -2,9 +2,10 @@ package com.template.auth.model;
 
 
 import com.sun.istack.NotNull;
-import lombok.*;
-import org.aspectj.bridge.IMessage;
-import org.springframework.stereotype.Controller;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;

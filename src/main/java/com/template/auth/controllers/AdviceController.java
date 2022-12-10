@@ -4,7 +4,6 @@ import com.template.auth.dto.ErroDto;
 import com.template.auth.exceptions.RequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.logging.LoggerGroup;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

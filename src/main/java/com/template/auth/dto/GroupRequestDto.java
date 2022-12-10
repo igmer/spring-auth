@@ -3,7 +3,6 @@ package com.template.auth.dto;
 import com.template.auth.model.Role;
 import lombok.Data;
 
-import javax.persistence.SecondaryTable;
 import java.util.Set;
 
 @Data

@@ -1,8 +1,8 @@
 package com.template.auth.dto;
 
-import lombok.*;
-
-import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter @Setter @AllArgsConstructor
 public class Message {
