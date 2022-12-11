@@ -1,5 +1,6 @@
 package com.template.auth.security;
 
+import com.template.auth.dto.TokenResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -30,9 +31,11 @@ public class JwtUtils {
     public  String generateToken(UserDetails userDetails, Map<String,Object> claims){
         return createToken(claims,userDetails);
     }
-    public  String generateToken(UserDetails userDetails){
+    public TokenResponse generateToken(UserDetails userDetails){
         Map<String,Object> claims = new HashMap<>();
-        return createToken(claims,userDetails);
+
+        String token= createToken(claims,userDetails);
+        return  TokenResponse.builder().token(token).build();
     }
 
     private Claims extractAllClaims(String token) {

@@ -7,6 +7,7 @@ import com.template.auth.model.User;
 import com.template.auth.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,7 +31,10 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<User> create(@Valid @RequestBody UserRequestDto user) {
-        User newUser = userService.save(user.toUser());
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String encryptedPass = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPass);
+        userService.save(user.toUser());
         return new ResponseEntity<User>(user.toUser(), HttpStatus.OK);
 
     }
