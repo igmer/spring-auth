@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -27,6 +28,12 @@ public class UserController {
             throw  new RequestException(HttpStatus.NOT_FOUND,"P-400","User not found");
         }
         return new ResponseEntity<>(user.get(), HttpStatus.OK);
+    }
+
+    @GetMapping("/")
+    public  ResponseEntity<List<User>> findAll(){
+        List<User> users = userService.findAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PostMapping("/create")

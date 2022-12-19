@@ -38,6 +38,7 @@ private final UserDetailService userDetailService;
                 .authenticated()
                 .and()
                 .cors().configurationSource(new CorsConfigurationSource() {
+                    // TODO custom class and limit origin
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                         CorsConfiguration config = new CorsConfiguration();

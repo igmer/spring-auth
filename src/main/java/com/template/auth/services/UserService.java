@@ -8,6 +8,7 @@ import com.template.auth.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -46,4 +47,7 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 }

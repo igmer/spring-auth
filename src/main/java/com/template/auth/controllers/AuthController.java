@@ -30,6 +30,6 @@ public class AuthController {
             return ResponseEntity.ok(jwtUtils.generateToken(userDetails));
         }
 
-        throw new RequestException(HttpStatus.NOT_FOUND,"P-404","bad credentials");
+        throw new RequestException(HttpStatus.UNAUTHORIZED,"P-401","bad credentials");
     }
 }
