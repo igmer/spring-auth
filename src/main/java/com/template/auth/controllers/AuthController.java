@@ -27,7 +27,6 @@ public class AuthController {
             //TODO add refresh token
             return ResponseEntity.ok(jwtUtils.generateToken(userDetails));
         }
-
         throw new RequestException(HttpStatus.UNAUTHORIZED,"P-401","bad credentials");
     }
 }
