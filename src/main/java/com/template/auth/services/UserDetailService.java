@@ -29,12 +29,12 @@ public class UserDetailService implements UserDetailsService {
         Optional<User> user = userRepository.findByUsername(username);
         //user was found, now we need compare password
         if (user.isEmpty()){
-            throw new RequestException(HttpStatus.NOT_FOUND,"P-404","Bad Credentials.!");
+            throw new RequestException(HttpStatus.UNAUTHORIZED,"P-401","Bad Credentials.!");
         }
         BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
         boolean passChecker = bc.matches(password,user.get().getPassword());
         if (!passChecker){
-            throw new RequestException(HttpStatus.NOT_FOUND,"P-404","Bad Credentials.!");
+            throw new RequestException(HttpStatus.UNAUTHORIZED,"P-401","Bad Credentials.!");
         }
         return new MyUserPrincipal(user.get());
     }
