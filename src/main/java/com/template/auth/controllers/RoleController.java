@@ -23,6 +23,7 @@ public class RoleController {
         Role newRole = roleService.save(role);
         return new ResponseEntity<>(newRole, HttpStatus.OK);
     }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/")
     public ResponseEntity<List<Role>> getRoles() {
         List<Role> roles = roleService.getAll();
