@@ -6,10 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 @Entity
 @Table(name = "auth_user", schema = "public")
@@ -29,5 +32,14 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.MERGE,CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "auth_group_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns =  @JoinColumn(name = "group_id"))
     private Set<Group> groups = new HashSet<>();
+    @Transient
+    private List<String> _roles;
+
+    public void setRoles(List<Role> roles){
+        _roles = roles.stream().map(Role::getName).collect(Collectors.toList());
+    }
+    public List<String> setRoles(){
+        return this._roles;
+    }
 
 }

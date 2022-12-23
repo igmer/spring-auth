@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class MyUserPrincipal implements UserDetails {
@@ -17,6 +18,9 @@ public class MyUserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+    }
+    public List<String> getRoles(){
+        return this.user.get_roles();
     }
 
     @Override

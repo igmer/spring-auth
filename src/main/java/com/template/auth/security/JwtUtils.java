@@ -9,14 +9,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 @Component
 public class JwtUtils {
-    private String jwtSigningKey = "secretclave";
     //TODO add vars to properties file
+    private String jwtSigningKey = "secretclave";
 
     public String extractUsername(String token){
         return extractClaim(token, Claims::getSubject);
@@ -28,12 +29,9 @@ public class JwtUtils {
         final Claims claims = extractAllClaims(token);
         return claims.get(claimName) != null;
     }
-    public  String generateToken(UserDetails userDetails, Map<String,Object> claims){
-        return createToken(claims,userDetails);
-    }
-    public TokenResponse generateToken(UserDetails userDetails){
+    public TokenResponse generateToken(UserDetails userDetails, List<String> roles){
         Map<String,Object> claims = new HashMap<>();
-
+        claims.put("ROLES",roles);
         String token= createToken(claims,userDetails);
         return  TokenResponse.builder().token(token).build();
     }
