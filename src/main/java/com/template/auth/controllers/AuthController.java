@@ -25,7 +25,7 @@ public class AuthController {
         final MyUserPrincipal userDetails = userDetailService.loadUserByUsername(loginRequest.getUsername(), loginRequest.getPassword());
         if (userDetails != null) {
             //TODO add refresh token
-            return ResponseEntity.ok(jwtUtils.generateToken(userDetails,userDetails.getRoles()));
+            return ResponseEntity.ok(jwtUtils.generateToken(userDetails));
         }
         throw new RequestException(HttpStatus.UNAUTHORIZED,"P-401","bad credentials");
     }

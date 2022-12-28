@@ -33,12 +33,12 @@ public class User {
     @JoinTable(name = "auth_group_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns =  @JoinColumn(name = "group_id"))
     private Set<Group> groups = new HashSet<>();
     @Transient
-    private List<String> _roles;
+    private List<Role> _roles;
 
     public void setRoles(List<Role> roles){
-        _roles = roles.stream().map(Role::getName).collect(Collectors.toList());
+        _roles = roles;
     }
-    public List<String> setRoles(){
+    public List<Role> getRoles(){
         return this._roles;
     }
 

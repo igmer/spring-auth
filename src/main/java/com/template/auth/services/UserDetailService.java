@@ -21,24 +21,29 @@ import java.util.Optional;
 public class UserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+
     @Override
-    public UserDetails loadUserByUsername(String username)  {
-        Optional<User> user = userRepository.findByUsername(username);
-        if (user.isEmpty()){
-            throw new RequestException(HttpStatus.NOT_FOUND,"P-404","Bad Credentials.!");
+    public UserDetails loadUserByUsername(String username) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if (userOptional.isEmpty()) {
+            throw new RequestException(HttpStatus.NOT_FOUND, "P-404", "Bad Credentials.!");
         }
-        return new MyUserPrincipal(user.get());
+        User user = userOptional.get();
+        List<Role> roles = roleRepository.findAllByUser(user.getId());
+        user.setRoles(roles);
+        return new MyUserPrincipal(userOptional.get());
     }
-    public MyUserPrincipal loadUserByUsername(String username,String password)  {
+
+    public MyUserPrincipal loadUserByUsername(String username, String password) {
         Optional<User> userOptional = userRepository.findByUsername(username);
         //user was found, now we need compare password
-        if (userOptional.isEmpty()){
-            throw new RequestException(HttpStatus.UNAUTHORIZED,"P-401","Bad Credentials.!");
+        if (userOptional.isEmpty()) {
+            throw new RequestException(HttpStatus.UNAUTHORIZED, "P-401", "Bad Credentials.!");
         }
         BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-        boolean passChecker = bc.matches(password,userOptional.get().getPassword());
-        if (!passChecker){
-            throw new RequestException(HttpStatus.UNAUTHORIZED,"P-401","Bad Credentials.!");
+        boolean passChecker = bc.matches(password, userOptional.get().getPassword());
+        if (!passChecker) {
+            throw new RequestException(HttpStatus.UNAUTHORIZED, "P-401", "Bad Credentials.!");
         }
         User user = userOptional.get();
         List<Role> roles = roleRepository.findAllByUser(user.getId());

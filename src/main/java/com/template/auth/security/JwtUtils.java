@@ -1,6 +1,7 @@
 package com.template.auth.security;
 
 import com.template.auth.dto.TokenResponse;
+import com.template.auth.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtils {
@@ -29,9 +31,9 @@ public class JwtUtils {
         final Claims claims = extractAllClaims(token);
         return claims.get(claimName) != null;
     }
-    public TokenResponse generateToken(UserDetails userDetails, List<String> roles){
+    public TokenResponse generateToken(UserDetails userDetails){
         Map<String,Object> claims = new HashMap<>();
-        claims.put("ROLES",roles);
+        //TODO in claims we can add extra user info
         String token= createToken(claims,userDetails);
         return  TokenResponse.builder().token(token).build();
     }

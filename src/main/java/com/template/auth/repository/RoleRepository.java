@@ -15,7 +15,7 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
     Role findById(int id);
 
     @Query(value = "SELECT *  FROM auth_role ar " +
-            "INNER JOIN auth_role_group arg ON arg.role_id =ar.id " +
+            "INNER JOIN auth_role_group arg ON arg.role_id =ar.role_id " +
             "INNER JOIN auth_group_user agu ON agu.group_id = arg.group_id " +
             "WHERE agu.user_id = :userId", nativeQuery = true)
     List<Role> findAllByUser(int userId);
