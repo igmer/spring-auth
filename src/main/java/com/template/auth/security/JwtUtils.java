@@ -1,7 +1,6 @@
 package com.template.auth.security;
 
 import com.template.auth.dto.TokenResponse;
-import com.template.auth.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,11 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Component
 public class JwtUtils {
@@ -42,7 +39,7 @@ public class JwtUtils {
         return Jwts.parser().setSigningKey(jwtSigningKey).parseClaimsJws(token).getBody();
     }
 
-    private String createToken(Map<String,Object> claims, UserDetails userDetails){
+    public String createToken(Map<String,Object> claims, UserDetails userDetails){
         return Jwts.builder().setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .claim("authorities",userDetails.getAuthorities())

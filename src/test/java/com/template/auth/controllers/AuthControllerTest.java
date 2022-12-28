@@ -28,22 +28,20 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class AuthControllerTest {
 
-
-    @Autowired
-    private  AuthenticationManager authenticationManager;
     @Autowired
     private UserDetailService userDetailService;
     @Autowired
     JwtUtils jwtUtils;
 
     @Autowired
-    AuthController authController = new AuthController(authenticationManager,jwtUtils,userDetailService);
+    AuthController authController = new AuthController(jwtUtils,userDetailService);
 
     @Test
     void authenticate() {
-        ResponseEntity<TokenResponse> response = authController.authenticate(LoginRequest.builder().username("igmer").password("12345678").build());
+        ResponseEntity<TokenResponse> response = authController.authenticate(LoginRequest.builder().username("fernandorod").password("12345678").build());
         assertNotNull(response);
         assertEquals(200,response.getStatusCode().value());
+
     }
 
 }
